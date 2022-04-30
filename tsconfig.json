@@ -1,0 +1,18 @@
+{
+	"extends": "@tsconfig/node16/tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"module": "commonjs",
+		"target": "ES2021",
+		"lib": [
+			"ES2021"
+		],
+		"declaration": true,
+		"declarationDir": "./dist",
+		"downlevelIteration": true,
+		"strictPropertyInitialization": false
+	},
+	"include": [
+		"src/**/*.ts"
+	]
+}

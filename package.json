@@ -1,0 +1,43 @@
+{
+	"name": "@tycrek/accounted4",
+	"version": "0.0.0",
+	"description": "",
+	"main": "./dist/accounted4.js",
+	"type": "commonjs",
+	"engines": {
+		"node": ">=16.14.x",
+		"npm": ">=8.8.x"
+	},
+	"scripts": {
+		"test": "cd test && node test.js",
+		"build": "rm -dr ./dist/ & tsc",
+		"prerelease": "npm run build && npm run test",
+		"release": "np"
+	},
+	"repository": "github:tycrek/accounted4",
+	"keywords": [
+		"express",
+		"middleware",
+		"oauth",
+		"authentication"
+	],
+	"author": "tycrek <t@tycrek.com> (https://tycrek.com/)",
+	"license": "ISC",
+	"bugs": "https://github.com/tycrek/accounted4/issues",
+	"homepage": "https://github.com/tycrek/accounted4#readme",
+	"funding": {
+		"type": "patreon",
+		"url": "https://patreon.com/tycrek"
+	},
+	"dependencies": {
+		"@tsconfig/node16": "^1.0.2",
+		"@types/express": "^4.17.13",
+		"typescript": "^4.6.3"
+	},
+	"devDependencies": {
+		"express": "^4.17.3"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
