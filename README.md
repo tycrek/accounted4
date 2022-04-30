@@ -7,7 +7,7 @@ accounted4
 
 [![NPMCBT badge]][NPMCBT link]
 
-*Express middleware for easy OAuth.*
+*Express middleware for easy OAuth with a variety of providers.*
 </div>
 
 [NPMCBT badge]: https://img.shields.io/npm/v/@tycrek/accounted4?color=CB3837&label=%20View%20on%20NPM&logo=npm&style=for-the-badge
