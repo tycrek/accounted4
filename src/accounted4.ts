@@ -60,7 +60,7 @@ export class Accounted4 {
 	static buildBaseUrl(hostname: string, useHttps: boolean): string;
 	static buildBaseUrl(hostname: string, useHttps: boolean, port: number): string;
 	static buildBaseUrl(hostname?: string, useHttps?: boolean, port?: number) {
-		return `${useHttps ? 'https' : 'http'}://${hostname}${port !== 80 && port !== 443 ? `:${port}` : ''}`;
+		return `${useHttps ? 'https' : 'http'}://${hostname}${!useHttps && port !== 80 && port !== 443 ? `:${port}` : ''}`;
 	}
 }
 
