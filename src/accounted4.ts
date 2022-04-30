@@ -2,6 +2,12 @@ import { Options } from './Options';
 import { Provider } from './Provider';
 import { Express, Request, Response, NextFunction } from 'express';
 
+// Providers
+import { Discord } from './providers/Discord';
+export const Providers = {
+	Discord
+};
+
 export interface ac4session {
 	/**
 	 * Name of provider being used
