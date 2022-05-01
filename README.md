@@ -15,7 +15,7 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. **Currently the only supported providers are Discord and Spotify**.
+**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Currently supported OAuth providers are Microsoft, Discord, and Spotify.
 
 ## Usage
 
@@ -62,41 +62,40 @@ This will initialize a session for each visitor to your app, which is accessible
 
 ### Configure a provider
 
-At this time, you have two choices for a provider: Discord and Spotify. When more are added, this section will be updated with the steps for each provider.
+For any provider you choose, you'll have to set up an "app" on the corresponding developer dashboard. See below for details on how to set this up for each provider.
 
-#### Discord
 
-[Create a Discord Application](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down.
+<details>
+<summary><strong>Microsoft</strong></summary>
+
+Microsoft is quite in-depth, so we'll skip the details here for now. Documentation will be added at a later date.
+
+</details>
+<details>
+<summary><strong>Discord</strong></summary>
+
+[Create a Discord Application](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for details on available scopes and their purpose.
+
+</details>
+<details>
+<summary><strong>Spotify</strong></summary>
+
+[Create a Spotify Application](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your client ID and a button to SHOW your client secret. Note these down for the next step. [Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for details on available scopes and their purpose.
+
+</details>
+
+Once your provider is configured, add the details to your code:
 
 ```ts
 const hostname = 'localhost';
 
-const provider = new Providers.Discord({
+const provider = new Providers.__PROVIDER_NAME_HERE__({
     BASE_URL: Accounted4.buildBaseUrl(hostname),
-    CLIENT_ID: /* Your Discord client ID here */,
-    CLIENT_SECRET: /* Your Discord client secret here */,
-    /* Also accepts an optional SCOPES array */
+    CLIENT_ID: /* Your provider client ID here */,
+    CLIENT_SECRET: /* Your provider client secret here */,
+    /* All providers also accept an optional SCOPES array */
 });
 ```
-
-[Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for details on available scopes and their purpose.
-
-#### Spotify
-
-[Create a Spotify Application](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your client ID and a button to SHOW your client secret. Note these down for the next step.
-
-```ts
-const hostname = 'localhost';
-
-const provider = new Providers.Spotify({
-    BASE_URL: Accounted4.buildBaseUrl(hostname),
-    CLIENT_ID: /* Your Spotify client ID here */,
-    CLIENT_SECRET: /* Your Spotify client secret here */
-    /* Also accepts an optional SCOPES array */
-});
-```
-
-[Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for details on available scopes and their purpose.
 
 ### Configure accounted4
 
@@ -124,11 +123,11 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 
 ## List of providers
 
+- [x] **Microsoft**
 - [x] **Discord**
 - [x] **Spotify**
 - [ ] GitHub
 - [ ] Google
-- [ ] Microsoft
 - [ ] Twitch
 - [ ] Yahoo
 - [ ] Amazon
