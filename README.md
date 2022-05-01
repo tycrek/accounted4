@@ -136,3 +136,11 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Apple
 - [ ] Twitter
 - [ ] Reddit
+
+## To-do
+
+- [ ] Add providers
+- [ ] Add documentation/tests/examples
+- [ ] Add support for multiple providers
+- [ ] Implement logout
+- [ ] Implement refreshing tokens
