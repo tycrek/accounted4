@@ -40,11 +40,13 @@ export class Spotify implements Provider {
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
 			}), { headers: { Authorization: `Basic ${Buffer.from(`${this.options.CLIENT_ID}:${this.options.CLIENT_SECRET}`).toString('base64')}` } })
-			.then(({ data }) =>
+			.then(({ data }) => {
+				if (data.error) throw new Error(data.error);
 				req.session.accounted4 = {
 					provider: this.name,
 					token: data.access_token
-				})
+				};
+			})
 			.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
 			.catch(next);
 	}
