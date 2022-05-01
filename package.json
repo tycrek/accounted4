@@ -11,8 +11,9 @@
 	"scripts": {
 		"test": "cd test && node test.js",
 		"build": "rm -dr ./dist/ & tsc",
-		"prerelease": "npm run build && npm run test",
-		"release": "np"
+		"dev": "npm run build && npm run test",
+		"prerelease": "npm run build",
+		"release": "np --no-tests"
 	},
 	"repository": "github:tycrek/accounted4",
 	"keywords": [
