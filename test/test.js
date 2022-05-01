@@ -23,8 +23,8 @@ app.use(session({
 const secrets = require('./secrets.json');
 const discord = new Discord({
 	BASE_URL: Accounted4.buildBaseUrl('dev.lh', false, 8080),
-	CLIENT_ID: secrets.CLIENT_ID,
-	CLIENT_SECRET: secrets.CLIENT_SECRET,
+	CLIENT_ID: secrets.DISCORD_CLIENT_ID,
+	CLIENT_SECRET: secrets.DISCORD_CLIENT_SECRET,
 	SCOPES: ['guilds'],
 });
 

@@ -66,20 +66,20 @@ At this time, there's only one provider supported: Discord. When more are added,
 
 #### Discord
 
-The first step is to [create a Discord Application](https://discord.com/developers/applications). You can name it whatever you want, but it's recommended to use the name of your app. Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down.
+[Create a Discord Application](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down.
 
 ```ts
 const hostname = 'localhost';
 
-const discord = new Providers.Discord({
+const provider = new Providers.Discord({
     BASE_URL: Accounted4.buildBaseUrl(hostname),
     CLIENT_ID: /* Your Discord client ID here */,
     CLIENT_SECRET: /* Your Discord client secret here */,
-    SCOPES: ['guilds.join email'] // SCOPES is optional; add any additional scopes you need
+    /* Also accepts an optional SCOPES array */
 });
 ```
 
-The `BASE_URL` is used so accounted4 knows what domain to use for the OAuth redirect. This will be improved in the future.
+[Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for details on available scopes and their purpose.
 
 ### Configure accounted4
 
@@ -88,7 +88,7 @@ Finally, we create an instance of `Accounted4`. Passing the app is required as a
 You can choose to apply the middleware to specific paths, or to the entire app.
 
 ```ts
-const ac4 = new Accounted4(app, discord, { hostname });
+const ac4 = new Accounted4(app, provider, { hostname });
 
 app.use(ac4.auth());
 // or
