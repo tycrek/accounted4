@@ -17,6 +17,11 @@ export interface Provider {
 	tokenUrl: string;
 
 	/**
+	 * Redirect URI
+	 */
+	redirectUri: string;
+
+	/**
 	 * Called when the user has successfully authenticated. Aka, the "redirect uri" route
 	 */
 	onSuccess: (req: Request, res: Response, next: NextFunction) => void;

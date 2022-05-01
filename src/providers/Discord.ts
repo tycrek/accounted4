@@ -15,14 +15,16 @@ export class Discord implements Provider {
 	options: DiscordOptions;
 	authUrl = 'https://discord.com/api/v8/oauth2/authorize';
 	tokenUrl = 'https://discord.com/api/oauth2/token';
+	redirectUri: string;
 
 	constructor(options: DiscordOptions) {
 		this.options = options;
+		this.redirectUri = `${this.options.BASE_URL}/accounted4/${this.name}`;
 
 		// Build auth url
 		this.authUrl = `${this.authUrl}?`.concat(encodeObjectAsParams({
 			client_id: this.options.CLIENT_ID,
-			redirect_uri: this.options.BASE_URL.concat('/accounted4/success/discord'),
+			redirect_uri: this.redirectUri,
 			response_type: 'code',
 			scope: 'identify '.concat(this.options.SCOPES?.join(' ') || '').trim()
 		}));
@@ -34,7 +36,7 @@ export class Discord implements Provider {
 				code: req.query.code,
 				client_id: this.options.CLIENT_ID,
 				client_secret: this.options.CLIENT_SECRET,
-				redirect_uri: this.options.BASE_URL.concat('/accounted4/success/discord'),
+				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
 			}))
 			.then(({ data }) =>

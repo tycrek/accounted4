@@ -34,7 +34,7 @@ export class Accounted4 {
 		};
 
 		// Success callback
-		app.get(`/accounted4/success/:providerName`, (req, res, next) => {
+		app.get(`/accounted4/:providerName`, (req, res, next) => {
 			let provider = req.params.providerName;
 			this.provider.onSuccess(req, res, next);
 		});
