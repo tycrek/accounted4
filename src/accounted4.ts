@@ -5,9 +5,11 @@ import { Express, Request, Response, NextFunction } from 'express';
 // Providers
 import { Discord } from './providers/Discord';
 import { Spotify } from './providers/Spotify';
+import { Microsoft } from './providers/Microsoft';
 export const Providers = {
 	Discord,
-	Spotify
+	Spotify,
+	Microsoft
 };
 
 export interface ac4session {

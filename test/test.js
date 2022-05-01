@@ -32,10 +32,16 @@ const spotify = new Providers.Spotify({
 	CLIENT_ID: secrets.SPOTIFY_CLIENT_ID,
 	CLIENT_SECRET: secrets.SPOTIFY_CLIENT_SECRET
 });
+const microsoft = new Providers.Microsoft({
+	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
+	CLIENT_ID: secrets.MICROSOFT_CLIENT_ID,
+	CLIENT_SECRET: secrets.MICROSOFT_CLIENT_SECRET,
+	SCOPES: ['user.read', 'offline_access'],
+});
 
 // Create Accounted4
-const ac4 = new Accounted4(app, spotify, {
-	hostname: 'dev.lh',
+const ac4 = new Accounted4(app, microsoft, {
+	hostname: 'localhost',
 	port: 8080
 });
 
@@ -55,4 +61,4 @@ app.use((err, req, res, next) => {
 	res.status(500).send('Something broke!');
 })
 
-app.listen(8080, () => console.log('Listening on port 8080! Click here: http://dev.lh:8080'));
+app.listen(8080, () => console.log('Listening on port 8080! Click here: http://localhost:8080'));
