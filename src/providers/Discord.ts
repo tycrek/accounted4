@@ -10,6 +10,9 @@ interface DiscordOptions {
 	SCOPES?: string[];
 }
 
+/**
+ * https://discord.com/developers/docs/topics/oauth2
+ */
 export class Discord implements Provider {
 	name = 'discord';
 	options: DiscordOptions;

@@ -10,6 +10,9 @@ interface SpotifyOptions {
 	SCOPES?: string[];
 }
 
+/**
+ * https://developer.spotify.com/documentation/general/guides/authorization/code-flow/
+ */
 export class Spotify implements Provider {
 	name = 'spotify';
 	options: SpotifyOptions;
