@@ -24,11 +24,15 @@ accounted4
 ```bash
 npm i @tycrek/accounted4
 
-# You'll also need express-session and a Session storage. Optimally you'll use something other than MemoryStore in production.
+# You'll also need express-session and a session store. Optimally you'll use something other than MemoryStore in production.
 npm i express-session memorystore
 ```
 
-**Use** the `Accounted4` class:
+### Preparing the code
+
+accounted4 is intended for use with [Express](https://expressjs.com/). It requires the use of [express-session](https://www.npmjs.com/package/express-session) and a [compatible session store](https://www.npmjs.com/package/express-session#compatible-session-stores). The easiest way to get started is by using the [memorystore](https://www.npmjs.com/package/memorystore) module. In a production environment, it is recommended to use a proper database with the corresponding module for a session store.
+
+For tutorial purposes, this README will use `memorystore`, but feel free to use another if you prefer.
 
 ```ts
 import { Accounted4, Providers } from '@tycrek/accounted4';
@@ -36,42 +40,83 @@ import express from 'express';
 import session from 'express-session';
 import MemoryStore from 'memorystore';
 
-// Set up your Express app
 const app = express();
-
-// Setup sessions
 const sessionStore = MemoryStore(session);
-let DAY = 86400000;
+```
 
-// Please be aware that this code is provided simply for demo purposes.
-// You should properly implement Session storage for production.
+The next block attaches the session middleware to Express. You are recommended to [adjust these settings](https://www.npmjs.com/package/express-session#options) as you see fit.
+
+```ts
+const DAY = 86400000;
 app.use(session({
-	name: 'accounted4',
-	resave: true,
-	saveUninitialized: false,
-	cookie: { maxAge: DAY, secure: false /* set to true if using HTTPS*/ },
-	secret: (Math.random() * 100).toString(),
-	store: new sessionStore({ checkPeriod: DAY }) as any,
+    name: 'accounted4',
+    resave: true,
+    saveUninitialized: false,
+    cookie: { maxAge: DAY, secure: false /* set to true if using HTTPS*/ },
+    secret: (Math.random() * 100).toString(),
+    store: new sessionStore({ checkPeriod: DAY }) as any,
 }));
+```
 
-// Set the hostname
+This will initialize a session for each visitor to your app, which is accessible through `req.session`.
+
+### Configure a provider
+
+At this time, there's only one provider supported: Discord. When more are added, this section will be updated with the steps for each provider.
+
+#### Discord
+
+The first step is to [create a Discord Application](https://discord.com/developers/applications). You can name it whatever you want, but it's recommended to use the name of your app. Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down.
+
+```ts
 const hostname = 'localhost';
 
-// Create a Discord provider
 const discord = new Providers.Discord({
-        BASE_URL: Accounted4.buildBaseUrl(hostname),
-        CLIENT_ID: /* Your Discord client ID here */,
-        CLIENT_SECRET: /* Your Discord client secret here */,
-        SCOPES: ['guilds.join email'] // Optional, add any additional scopes you need
-    });
+    BASE_URL: Accounted4.buildBaseUrl(hostname),
+    CLIENT_ID: /* Your Discord client ID here */,
+    CLIENT_SECRET: /* Your Discord client secret here */,
+    SCOPES: ['guilds.join email'] // SCOPES is optional; add any additional scopes you need
+});
+```
 
-// Create an instance of Accounted4
+The `BASE_URL` is used so accounted4 knows what domain to use for the OAuth redirect. This will be improved in the future.
+
+### Configure accounted4
+
+Finally, we create an instance of `Accounted4`. Passing the app is required as accounted4 needs to create routes for the OAuth provider to call upon for redirects. Support for more than one provider is planned for the future.
+
+You can choose to apply the middleware to specific paths, or to the entire app.
+
+```ts
 const ac4 = new Accounted4(app, discord, { hostname });
 
-// Now use Accounted4 on either all routes or just a specific subset of routes
 app.use(ac4.auth());
 // or
 app.use('/my-private-zone', ac4.auth());
 ```
 
-### README is still WIP, please check back soon
+Now add the rest of your routes and start the app. Visiting any of your routes will redirect the user to the OAuth provider. Once they sign in, they'll be redirected back to your app.
+
+### Using the providers' API
+
+After successful authentication, accounted4 stores the provider name and **access token** in the session. You can access these values through the `req.session.accounted4` object. This access token can be used with the API of your chosen provider (make sure you include any necessary scopes when configuring the provider).
+
+### Next steps
+
+At the moment, that's all there is to it! As development continues, I'll add more docs on usage.
+
+## List of providers
+
+- [x] **Discord**
+- [ ] GitHub
+- [ ] Google
+- [ ] Microsoft
+- [ ] Twitch
+- [ ] Yahoo
+- [ ] Amazon
+- [ ] Facebook
+- [ ] Apple
+- [ ] Twitter
+- [ ] Reddit
+- [ ] Spotify
+		
