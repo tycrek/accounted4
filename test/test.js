@@ -1,7 +1,7 @@
 // Import packages
 const express = require('express');
 const session = require('express-session')
-const { Accounted4 } = require('../dist/accounted4');
+const { Accounted4, Providers } = require('../dist/accounted4');
 const { Discord } = require('../dist/providers/Discord');
 
 // Set up Express
@@ -19,7 +19,7 @@ app.use(session({
 	store: new MemoryStore({ checkPeriod: DAY }),
 }));
 
-// Create the Discord provider
+// Create the provider
 const secrets = require('./secrets.json');
 const discord = new Discord({
 	BASE_URL: Accounted4.buildBaseUrl('dev.lh', false, 8080),
@@ -27,9 +27,14 @@ const discord = new Discord({
 	CLIENT_SECRET: secrets.DISCORD_CLIENT_SECRET,
 	SCOPES: ['guilds'],
 });
+const spotify = new Providers.Spotify({
+	BASE_URL: Accounted4.buildBaseUrl('dev.lh', false, 8080),
+	CLIENT_ID: secrets.SPOTIFY_CLIENT_ID,
+	CLIENT_SECRET: secrets.SPOTIFY_CLIENT_SECRET
+});
 
 // Create Accounted4
-const ac4 = new Accounted4(app, discord, {
+const ac4 = new Accounted4(app, spotify, {
 	hostname: 'dev.lh',
 	port: 8080
 });
