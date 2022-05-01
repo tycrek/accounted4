@@ -15,7 +15,7 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. **Currently the only supported provider is Discord**.
+**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. **Currently the only supported providers are Discord and Spotify**.
 
 ## Usage
 
@@ -62,7 +62,7 @@ This will initialize a session for each visitor to your app, which is accessible
 
 ### Configure a provider
 
-At this time, there's only one provider supported: Discord. When more are added, this section will be updated with the steps for each provider.
+At this time, you have two choices for a provider: Discord and Spotify. When more are added, this section will be updated with the steps for each provider.
 
 #### Discord
 
@@ -80,6 +80,23 @@ const provider = new Providers.Discord({
 ```
 
 [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for details on available scopes and their purpose.
+
+#### Spotify
+
+[Create a Spotify Application](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your client ID and a button to SHOW your client secret. Note these down for the next step.
+
+```ts
+const hostname = 'localhost';
+
+const provider = new Providers.Spotify({
+    BASE_URL: Accounted4.buildBaseUrl(hostname),
+    CLIENT_ID: /* Your Spotify client ID here */,
+    CLIENT_SECRET: /* Your Spotify client secret here */
+    /* Also accepts an optional SCOPES array */
+});
+```
+
+[Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for details on available scopes and their purpose.
 
 ### Configure accounted4
 
@@ -108,6 +125,7 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 ## List of providers
 
 - [x] **Discord**
+- [x] **Spotify**
 - [ ] GitHub
 - [ ] Google
 - [ ] Microsoft
@@ -118,5 +136,3 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Apple
 - [ ] Twitter
 - [ ] Reddit
-- [ ] Spotify
-		
