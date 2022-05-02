@@ -64,6 +64,16 @@ This will initialize a session for each visitor to your app, which is accessible
 
 For any provider you choose, you'll have to set up an "app" on the corresponding developer dashboard. See below for details on how to set this up for each provider.
 
+#### Redirect URI's
+
+Pretty much every provider requires a redirect URI. This is the URL that the provider will redirect to after the user has authenticated. To save some bytes, I'll just describe the redirect URI here, then you'll use it for all providers. If any providers use a different format, I'll note those differences in their subsection.
+
+- **For local development:** `http://localhost:8080/accounted4/<provider-name>`
+- **For production:** `https://<your-domain.com>/accounted4/<provider-name>`
+
+Replace `<provider-name>` with the name of the provider, as listed below, **in lowercase**. You do not need a trailing slash. For example: `https://awesome-website.com/accounted4/github` or `http://localhost:8080/accounted4/microsoft`.
+
+#### Providers
 
 <details>
 <summary><strong>Microsoft</strong></summary>
