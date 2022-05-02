@@ -151,6 +151,38 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Facebook
 - [ ] Twitter
 - [ ] Reddit
+- [ ] Shutterstock
+- [ ] Coursera
+- [ ] LinkedIn
+- [ ] Intuit
+- [ ] Adobe
+- [ ] PayPal
+- [ ] Eventbrite
+- [ ] Dropbox
+- [ ] Slack
+- [ ] Atlassian
+- [ ] Bitly
+- [ ] Box
+- [ ] GitLab
+- [ ] Imgur
+- [ ] Instagram
+- [ ] Sina Weibo
+- [ ] Stripe
+- [ ] Stack Exchange
+- [ ] Strava
+- [ ] Vimeo
+- [ ] WeChat
+- [ ] VK
+- [ ] Yandex
+- [ ] Zendesk
+- [ ] Yelp
+- [ ] Zoho
+- [ ] SoundCloud
+- [ ] Flickr
+- [ ] Pocket
+- [ ] Pinterest
+- [ ] Tumblr
+- [ ] Foursquare
 - ~~Apple~~ *(annoyingly complex guidelines)*
 
 ## To-do
