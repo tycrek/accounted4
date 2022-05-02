@@ -162,44 +162,38 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [x] **[Google](https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens)**
 - [x] **[Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)**
 - [x] **[Spotify](https://developer.spotify.com/documentation/general/guides/authorization/code-flow/)**
-- [ ] Twitch
-- [ ] Yahoo
-- [ ] Amazon
-- [ ] Facebook
-- [ ] Twitter
-- [ ] Reddit
-- [ ] Shutterstock
-- [ ] Coursera
-- [ ] LinkedIn
-- [ ] Intuit
-- [ ] Adobe
-- [ ] PayPal
-- [ ] Eventbrite
-- [ ] Dropbox
-- [ ] Slack
-- [ ] Atlassian
-- [ ] Bitly
-- [ ] Box
-- [ ] GitLab
-- [ ] Imgur
-- [ ] Instagram
-- [ ] Sina Weibo
-- [ ] Stripe
-- [ ] Stack Exchange
-- [ ] Strava
-- [ ] Vimeo
-- [ ] WeChat
-- [ ] VK
-- [ ] Yandex
-- [ ] Zendesk
-- [ ] Yelp
-- [ ] Zoho
-- [ ] SoundCloud
-- [ ] Flickr
-- [ ] Pocket
-- [ ] Pinterest
-- [ ] Tumblr
-- [ ] Foursquare
+- [ ] [Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)
+- [ ] [Yahoo](https://developer.yahoo.com/oauth2/guide/flows_authcode/)
+- [ ] [Amazon](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html)
+- [ ] [Facebook](https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow#login)
+- [ ] [Twitter](https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code)
+- [ ] [Reddit](https://github.com/reddit-archive/reddit/wiki/OAuth2)
+- [ ] [Shutterstock](https://www.shutterstock.com/developers/documentation/authentication#oauth-authentication)
+- [ ] [LinkedIn](https://docs.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow)
+- [ ] [Intuit](https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization/oauth-2.0)
+- [ ] [Adobe](https://developer.adobe.com/developer-console/docs/guides/authentication/OAuth/)
+- [ ] [PayPal](https://developer.paypal.com/api/rest/authentication/)?
+- [ ] [Eventbrite](https://www.eventbrite.com/platform/docs/authentication#getting-started-with-authentication)
+- [ ] [Dropbox](https://developers.dropbox.com/oauth-guide)
+- [ ] [Slack](https://api.slack.com/legacy/oauth)
+- [ ] [Bitly](https://dev.bitly.com/docs/getting-started/authentication/)
+- [ ] [Box](https://developer.box.com/guides/authentication/oauth2/without-sdk/)
+- [ ] [GitLab](https://docs.gitlab.com/ee/api/oauth2.html#authorization-code-flow)
+- [ ] [Imgur](https://apidocs.imgur.com/#authorization-and-oauth)
+- [ ] [Instagram](https://developers.facebook.com/docs/instagram-basic-display-api/reference/oauth-authorize)
+- [ ] [Stripe](https://stripe.com/docs/connect/oauth-reference)?
+- [ ] [Stack Exchange](https://api.stackexchange.com/docs/authentication)
+- [ ] [Strava](https://developers.strava.com/docs/authentication/#requestingaccess)
+- [ ] [Vimeo](https://developer.vimeo.com/api/authentication#using-the-auth-code-grant)
+- [ ] [VK](https://dev.vk.com/reference) (it's in russian)
+- [ ] [Yandex](https://yandex.com/dev/id/)
+- [ ] [Zoho](https://www.zoho.com/accounts/protocol/oauth/web-apps/authorization.html)
+- [ ] [SoundCloud](https://developers.soundcloud.com/docs#authentication)
+- [ ] [Flickr](https://www.flickr.com/services/api/auth.oauth.html)?
+- [ ] [Pocket](https://getpocket.com/developer/docs/authentication)
+- [ ] [Pinterest](https://developers.pinterest.com/docs/api/v5/#tag/oauth)
+- [ ] [Tumblr](https://www.tumblr.com/docs/en/api/v2#oauth2-authorization)
+- [ ] [TikTok](https://developers.tiktok.com/doc/login-kit-web)
 - ~~Apple~~ *(annoyingly complex guidelines)*
 
 ## To-do
