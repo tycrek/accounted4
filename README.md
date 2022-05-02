@@ -149,9 +149,9 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Yahoo
 - [ ] Amazon
 - [ ] Facebook
-- [ ] Apple
 - [ ] Twitter
 - [ ] Reddit
+- ~~Apple~~ *(annoyingly complex guidelines)*
 
 ## To-do
 
