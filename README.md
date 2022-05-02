@@ -15,7 +15,7 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Currently supported OAuth providers are Microsoft, Discord, and Spotify.
+**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Currently supported OAuth providers are Microsoft, GitHub, Discord, and Spotify.
 
 ## Usage
 
@@ -72,17 +72,24 @@ Microsoft is quite in-depth, so we'll skip the details here for now. Documentati
 
 </details>
 <details>
+<summary><strong>GitHub</strong></summary>
+
+[Create a GitHub app](https://github.com/settings/applications/new). For the **Authorization callback URL**, use the **production** redirect URI. You do not need to enable **Device Flow** but you can if you want. Once created, find the **Client ID** and generate a new **Client secret**. Copy these for the next step. [Visit GitHub's documentation](https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps) for more information on scopes.
+
+</details>
+<details>
 <summary><strong>Discord</strong></summary>
 
-[Create a Discord Application](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**, making sure to note these down. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for details on available scopes and their purpose.
+[Create a Discord app](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**. Make sure you add **both** redirect URIs. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for more information on scopes.
 
 </details>
 <details>
 <summary><strong>Spotify</strong></summary>
 
-[Create a Spotify Application](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your client ID and a button to SHOW your client secret. Note these down for the next step. [Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for details on available scopes and their purpose.
+[Create a Spotify app](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your **Client ID** and a button to **SHOW** your **Client secret**. Copy these for the next step. Click on **Edit Settings** and add **both** redirect URI's. [Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for more information on scopes.
 
 </details>
+<br>
 
 Once your provider is configured, add the details to your code:
 
@@ -124,9 +131,9 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 ## List of providers
 
 - [x] **Microsoft**
+- [x] **GitHub**
 - [x] **Discord**
 - [x] **Spotify**
-- [ ] GitHub
 - [ ] Google
 - [ ] Twitch
 - [ ] Yahoo
@@ -143,3 +150,4 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Add support for multiple providers
 - [ ] Implement logout
 - [ ] Implement refreshing tokens
+- [ ] Automatic State checking

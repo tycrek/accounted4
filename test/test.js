@@ -38,9 +38,14 @@ const microsoft = new Providers.Microsoft({
 	CLIENT_SECRET: secrets.MICROSOFT_CLIENT_SECRET,
 	SCOPES: ['user.read', 'offline_access'],
 });
+const github = new Providers.GitHub({
+	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
+	CLIENT_ID: secrets.GITHUB_CLIENT_ID,
+	CLIENT_SECRET: secrets.GITHUB_CLIENT_SECRET,
+});
 
 // Create Accounted4
-const ac4 = new Accounted4(app, microsoft, {
+const ac4 = new Accounted4(app, github, {
 	hostname: 'localhost',
 	port: 8080
 });

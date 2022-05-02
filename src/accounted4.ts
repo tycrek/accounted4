@@ -6,10 +6,12 @@ import { Express, Request, Response, NextFunction } from 'express';
 import { Discord } from './providers/Discord';
 import { Spotify } from './providers/Spotify';
 import { Microsoft } from './providers/Microsoft';
+import { GitHub } from './providers/GitHub';
 export const Providers = {
 	Discord,
 	Spotify,
-	Microsoft
+	Microsoft,
+	GitHub
 };
 
 export interface ac4session {
