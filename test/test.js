@@ -43,9 +43,14 @@ const github = new Providers.GitHub({
 	CLIENT_ID: secrets.GITHUB_CLIENT_ID,
 	CLIENT_SECRET: secrets.GITHUB_CLIENT_SECRET,
 });
+const google = new Providers.Google({
+	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
+	CLIENT_ID: secrets.GOOGLE_CLIENT_ID,
+	CLIENT_SECRET: secrets.GOOGLE_CLIENT_SECRET,
+});
 
 // Create Accounted4
-const ac4 = new Accounted4(app, github, {
+const ac4 = new Accounted4(app, google, {
 	hostname: 'localhost',
 	port: 8080
 });

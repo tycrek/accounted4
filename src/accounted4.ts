@@ -4,14 +4,16 @@ import { Express, Request, Response, NextFunction } from 'express';
 
 // Providers
 import { Discord } from './providers/Discord';
-import { Spotify } from './providers/Spotify';
-import { Microsoft } from './providers/Microsoft';
 import { GitHub } from './providers/GitHub';
+import { Google } from './providers/Google';
+import { Microsoft } from './providers/Microsoft';
+import { Spotify } from './providers/Spotify';
 export const Providers = {
 	Discord,
-	Spotify,
+	GitHub,
+	Google,
 	Microsoft,
-	GitHub
+	Spotify,
 };
 
 export interface ac4session {
