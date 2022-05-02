@@ -20,3 +20,8 @@ coverage
 
 # source
 src/
+
+# git
+.gitattributes
+.gitignore
+.gitmodules
