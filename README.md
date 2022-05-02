@@ -15,7 +15,7 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Currently supported OAuth providers are Microsoft, GitHub, Discord, and Spotify.
+**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Supported OAuth providers are [detailed below](#providers).
 
 ## Usage
 
@@ -76,9 +76,9 @@ Replace `<provider-name>` with the name of the provider, as listed below, **in l
 #### Providers
 
 <details>
-<summary><strong>Microsoft</strong></summary>
+<summary><strong>Discord</strong></summary>
 
-Microsoft is quite in-depth, so we'll skip the details here for now. Documentation will be added at a later date.
+[Create a Discord app](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**. Make sure you add **both** redirect URIs. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for more information on scopes.
 
 </details>
 <details>
@@ -88,9 +88,26 @@ Microsoft is quite in-depth, so we'll skip the details here for now. Documentati
 
 </details>
 <details>
-<summary><strong>Discord</strong></summary>
+<summary><strong>Google</strong></summary>
 
-[Create a Discord app](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**. Make sure you add **both** redirect URIs. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for more information on scopes.
+[Create a Google Cloud project](https://console.cloud.google.com/home/dashboard). Using the search bar, start typing "APIs and Services", then select **APIs & Services**. Follow these steps to configure your app:
+
+1. On the left of the dashboard, select **OAuth consent screen**.
+2. Choose **External** and click **Create**.
+3. The next page sets up your app metadata. Enter anything required, but feel free to leave optional items blank.
+4. The next page asks for scopes. If you already know what scopes you require, enter them now. Otherwise, continue. [Visit Google's documentation](https://developers.google.com/identity/protocols/oauth2/scopes) for more information on scopes.
+5. The next page asks for test users. Add yourself and any other Google account you wish to test your app. Make sure to enter the email address of any testers (the email must correspond to a Google account).
+6. If the summary looks good to you, click on **Credentials** on the left of the dashboard.
+7. Click on **+ Create credentials**, then **OAuth client ID**.
+8. Choose **Web application** for the type and give it a name.
+9. Add **both** redirect URI's from above as **Authorized redirect URIs** (you don't need any **Authorized JavaScript origins**).
+10. Click **Create**. You will be shown your **Client ID** and **Client secret**. Copy these for the next step.
+
+</details>
+<details>
+<summary><strong>Microsoft</strong></summary>
+
+Microsoft is quite in-depth, so we'll skip the details here for now. Documentation will be added at a later date.
 
 </details>
 <details>
@@ -140,11 +157,11 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 
 ## List of providers
 
-- [x] **Microsoft**
-- [x] **GitHub**
-- [x] **Discord**
-- [x] **Spotify**
-- [ ] Google
+- [x] **[Discord](https://discord.com/developers/docs/topics/oauth2)**
+- [x] **[GitHub](https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps)**
+- [x] **[Google](https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens)**
+- [x] **[Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)**
+- [x] **[Spotify](https://developer.spotify.com/documentation/general/guides/authorization/code-flow/)**
 - [ ] Twitch
 - [ ] Yahoo
 - [ ] Amazon
