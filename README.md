@@ -185,7 +185,7 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] [Stack Exchange](https://api.stackexchange.com/docs/authentication)
 - [ ] [Strava](https://developers.strava.com/docs/authentication/#requestingaccess)
 - [ ] [Vimeo](https://developer.vimeo.com/api/authentication#using-the-auth-code-grant)
-- [ ] [VK](https://dev.vk.com/reference) (it's in russian)
+- [ ] [VK](https://dev.vk.com/reference) (it's in russian) ([more docs](https://gist.github.com/d1snin/019d5da296558687ee7e3cce9d6d21e5) from @d1snin)
 - [ ] [Yandex](https://yandex.com/dev/id/)
 - [ ] [Zoho](https://www.zoho.com/accounts/protocol/oauth/web-apps/authorization.html)
 - [ ] [SoundCloud](https://developers.soundcloud.com/docs#authentication)
