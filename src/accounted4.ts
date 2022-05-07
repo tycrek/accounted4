@@ -1,20 +1,6 @@
-import { Options } from './Options';
+import { Options, Providers, ProviderNames } from './Options';
 import { Provider } from './Provider';
 import { Express, Request, Response, NextFunction } from 'express';
-
-// Providers
-import { Discord } from './providers/Discord';
-import { GitHub } from './providers/GitHub';
-import { Google } from './providers/Google';
-import { Microsoft } from './providers/Microsoft';
-import { Spotify } from './providers/Spotify';
-export const Providers = {
-	Discord,
-	GitHub,
-	Google,
-	Microsoft,
-	Spotify,
-};
 
 export interface ac4session {
 	/**
@@ -29,22 +15,42 @@ export interface ac4session {
 }
 
 export class Accounted4 {
-	provider: Provider;
+	baseUrl: string;
+	providers: { [key: string]: Provider };
 	options: Options;
 
-	constructor(app: Express, provider: Provider, options: Options) {
-		this.provider = provider;
-
+	constructor(app: Express, options: Options) {
 		this.options = {
 			hostname: options.hostname,
 			port: options.port ?? (options.useHttps ? 443 : 80),
-			useHttps: options.useHttps ?? false
+			useHttps: options.useHttps ?? false,
+			defaultProvider: options.defaultProvider,
+			optionalProviders: options.optionalProviders ?? [],
+			providerOptions: options.providerOptions,
 		};
 
-		// Success callback
+		// Set base URL
+		this.baseUrl = Accounted4.buildBaseUrl(this.options.hostname, this.options.useHttps, this.options.port);
+
+		// Build providers
+		this.providers = {};
+		const checkProvider = (provider: ProviderNames) => {
+			let providerOptions = this.options.providerOptions[provider];
+			if (!providerOptions) throw new Error(`Provider ${provider} does not have options`);
+			this.providers[provider.toLowerCase()] = new Providers[provider](this.baseUrl, providerOptions);
+		};
+
+		// Check default provider
+		checkProvider(this.options.defaultProvider);
+
+		// Check optional providers
+		this.options.optionalProviders?.forEach(checkProvider);
+
+		// Set success callbacks
 		app.get(`/accounted4/:providerName`, (req, res, next) => {
 			let provider = req.params.providerName;
-			this.provider.onSuccess(req, res, next);
+			if (!this.providers[provider.toLowerCase()]) next(new Error(`Provider ${provider} not found`));
+			this.providers[provider.toLowerCase()].onSuccess(req, res, next);
 		});
 	}
 
@@ -59,14 +65,14 @@ export class Accounted4 {
 			} else {
 				console.log(`Session ${req.session.id} not authenticated`);
 				req.session.postAuthPath = req.originalUrl;
-				res.redirect(this.provider.authUrl)
+				res.redirect(this.providers[this.options.defaultProvider.toLowerCase()].authUrl)
 			}
 		};
 	}
 
 	static buildBaseUrl(hostname: string): string;
-	static buildBaseUrl(hostname: string, useHttps: boolean): string;
-	static buildBaseUrl(hostname: string, useHttps: boolean, port: number): string;
+	static buildBaseUrl(hostname: string, useHttps?: boolean): string;
+	static buildBaseUrl(hostname: string, useHttps?: boolean, port?: number): string;
 	static buildBaseUrl(hostname?: string, useHttps?: boolean, port?: number) {
 		return `${useHttps ? 'https' : 'http'}://${hostname}${!useHttps && port !== 80 && port !== 443 ? `:${port}` : ''}`;
 	}

@@ -1,20 +1,13 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider } from '../Provider';
+import { Provider, ProviderOptions } from '../Provider';
 
-interface MicrosoftOptions {
-	BASE_URL: string;
-	CLIENT_ID: string;
-	CLIENT_SECRET: string;
-	/**
-	 * Includes openid by default
-	 */
-	SCOPES?: string[];
+export interface MicrosoftOptions extends ProviderOptions {
 	/**
 	 * Defaults to consumers
 	 */
-	TENANT?: 'consumers' | 'organizations' | 'common';
+	tenant?: 'consumers' | 'organizations' | 'common';
 }
 
 /**
@@ -22,23 +15,25 @@ interface MicrosoftOptions {
  */
 export class Microsoft implements Provider {
 	name = 'microsoft';
+	baseUrl: string;
 	options: MicrosoftOptions;
 	authUrl = `https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize`;
 	tokenUrl = `https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token`;
 	redirectUri: string;
 
-	constructor(options: MicrosoftOptions) {
+	constructor(baseUrl: string, options: MicrosoftOptions) {
+		this.baseUrl = baseUrl;
 		this.options = options;
-		this.authUrl = this.authUrl.replace('{tenant}', this.options.TENANT ?? 'consumers');
-		this.tokenUrl = this.tokenUrl.replace('{tenant}', this.options.TENANT ?? 'consumers');
-		this.redirectUri = `${this.options.BASE_URL}/accounted4/${this.name}`;
+		this.authUrl = this.authUrl.replace('{tenant}', this.options.tenant ?? 'consumers');
+		this.tokenUrl = this.tokenUrl.replace('{tenant}', this.options.tenant ?? 'consumers');
+		this.redirectUri = `${this.baseUrl}/accounted4/${this.name}`;
 
 		// Build auth url
 		this.authUrl = `${this.authUrl}?`.concat(encodeObjectAsParams({
-			client_id: this.options.CLIENT_ID,
+			client_id: this.options.clientId,
 			redirect_uri: this.redirectUri,
 			response_type: 'code',
-			scope: 'openid '.concat(this.options.SCOPES?.join(' ') || '').trim()
+			scope: 'openid '.concat(this.options.scopes?.join(' ') || '').trim()
 		}));
 	}
 
@@ -46,8 +41,8 @@ export class Microsoft implements Provider {
 		axios
 			.post(this.tokenUrl, encodeObjectAsParams({
 				code: req.query.code,
-				client_id: this.options.CLIENT_ID,
-				client_secret: this.options.CLIENT_SECRET,
+				client_id: this.options.clientId,
+				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
 			}))

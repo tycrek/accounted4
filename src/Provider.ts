@@ -7,6 +7,11 @@ export interface Provider {
 	name: string;
 
 	/**
+	 * Base URL
+	 */
+	baseUrl: string;
+
+	/**
 	 * Authorization URL
 	 */
 	authUrl: string;
@@ -25,4 +30,21 @@ export interface Provider {
 	 * Called when the user has successfully authenticated. Aka, the "redirect uri" route
 	 */
 	onSuccess: (req: Request, res: Response, next: NextFunction) => void;
+}
+
+export interface ProviderOptions {
+	/**
+	 * Client ID
+	 */
+	clientId: string;
+
+	/**
+	 * Client Secret
+	 */
+	clientSecret: string;
+
+	/**
+	 * Scopes
+	 */
+	scopes?: string[];
 }

@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider } from '../Provider';
+import { Provider, ProviderOptions } from '../Provider';
 
-interface DiscordOptions {
-	BASE_URL: string;
-	CLIENT_ID: string;
-	CLIENT_SECRET: string;
-	SCOPES?: string[];
+export interface DiscordOptions extends ProviderOptions {
 }
 
 /**
@@ -15,21 +11,23 @@ interface DiscordOptions {
  */
 export class Discord implements Provider {
 	name = 'discord';
+	baseUrl: string;
 	options: DiscordOptions;
 	authUrl = 'https://discord.com/api/v8/oauth2/authorize';
 	tokenUrl = 'https://discord.com/api/oauth2/token';
 	redirectUri: string;
 
-	constructor(options: DiscordOptions) {
+	constructor(baseUrl: string, options: DiscordOptions) {
+		this.baseUrl = baseUrl;
 		this.options = options;
-		this.redirectUri = `${this.options.BASE_URL}/accounted4/${this.name}`;
+		this.redirectUri = `${this.baseUrl}/accounted4/${this.name}`;
 
 		// Build auth url
 		this.authUrl = `${this.authUrl}?`.concat(encodeObjectAsParams({
-			client_id: this.options.CLIENT_ID,
+			client_id: this.options.clientId,
 			redirect_uri: this.redirectUri,
 			response_type: 'code',
-			scope: 'identify '.concat(this.options.SCOPES?.join(' ') || '').trim()
+			scope: 'identify '.concat(this.options.scopes?.join(' ') || '').trim()
 		}));
 	}
 
@@ -37,8 +35,8 @@ export class Discord implements Provider {
 		axios
 			.post(this.tokenUrl, encodeObjectAsParams({
 				code: req.query.code,
-				client_id: this.options.CLIENT_ID,
-				client_secret: this.options.CLIENT_SECRET,
+				client_id: this.options.clientId,
+				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
 			}))

@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider } from '../Provider';
+import { Provider, ProviderOptions } from '../Provider';
 
-interface GoogleOptions {
-	BASE_URL: string;
-	CLIENT_ID: string;
-	CLIENT_SECRET: string;
-	SCOPES?: string[];
+export interface GoogleOptions extends ProviderOptions {
 }
 
 /**
@@ -15,21 +11,23 @@ interface GoogleOptions {
  */
 export class Google implements Provider {
 	name = 'google';
+	baseUrl: string;
 	options: GoogleOptions;
 	authUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
 	tokenUrl = ' https://oauth2.googleapis.com/token';
 	redirectUri: string;
 
-	constructor(options: GoogleOptions) {
+	constructor(baseUrl: string, options: GoogleOptions) {
+		this.baseUrl = baseUrl;
 		this.options = options;
-		this.redirectUri = `${this.options.BASE_URL}/accounted4/${this.name}`;
+		this.redirectUri = `${this.baseUrl}/accounted4/${this.name}`;
 
 		// Build auth url
 		this.authUrl = `${this.authUrl}?`.concat(encodeObjectAsParams({
-			client_id: this.options.CLIENT_ID,
+			client_id: this.options.clientId,
 			redirect_uri: this.redirectUri,
 			response_type: 'code',
-			scope: 'openid '.concat(this.options.SCOPES?.join(' ') || '').trim()
+			scope: 'openid '.concat(this.options.scopes?.join(' ') || '').trim()
 		}));
 	}
 
@@ -37,8 +35,8 @@ export class Google implements Provider {
 		axios
 			.post(this.tokenUrl, encodeObjectAsParams({
 				code: req.query.code,
-				client_id: this.options.CLIENT_ID,
-				client_secret: this.options.CLIENT_SECRET,
+				client_id: this.options.clientId,
+				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code'
 			}))

@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider } from '../Provider';
+import { Provider, ProviderOptions } from '../Provider';
 
-interface SpotifyOptions {
-	BASE_URL: string;
-	CLIENT_ID: string;
-	CLIENT_SECRET: string;
-	SCOPES?: string[];
+export interface SpotifyOptions extends ProviderOptions {
 }
 
 /**
@@ -15,21 +11,23 @@ interface SpotifyOptions {
  */
 export class Spotify implements Provider {
 	name = 'spotify';
+	baseUrl: string;
 	options: SpotifyOptions;
 	authUrl = 'https://accounts.spotify.com/authorize';
 	tokenUrl = 'https://accounts.spotify.com/api/token';
 	redirectUri: string;
 
-	constructor(options: SpotifyOptions) {
+	constructor(baseUrl: string, options: SpotifyOptions) {
+		this.baseUrl = baseUrl;
 		this.options = options;
-		this.redirectUri = `${this.options.BASE_URL}/accounted4/${this.name}`;
+		this.redirectUri = `${this.baseUrl}/accounted4/${this.name}`;
 
 		// Build auth url
 		this.authUrl = `${this.authUrl}?`.concat(encodeObjectAsParams({
-			client_id: this.options.CLIENT_ID,
+			client_id: this.options.clientId,
 			redirect_uri: this.redirectUri,
 			response_type: 'code',
-			scope: ''.concat(this.options.SCOPES?.join(' ') || '').trim()
+			scope: ''.concat(this.options.scopes?.join(' ') || '').trim()
 		}));
 	}
 
@@ -39,7 +37,7 @@ export class Spotify implements Provider {
 				code: req.query.code,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
-			}), { headers: { Authorization: `Basic ${Buffer.from(`${this.options.CLIENT_ID}:${this.options.CLIENT_SECRET}`).toString('base64')}` } })
+			}), { headers: { Authorization: `Basic ${Buffer.from(`${this.options.clientId}:${this.options.clientSecret}`).toString('base64')}` } })
 			.then(({ data }) => {
 				if (data.error) throw new Error(data.error);
 				req.session.accounted4 = {
