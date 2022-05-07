@@ -1,8 +1,7 @@
 // Import packages
 const express = require('express');
 const session = require('express-session')
-const { Accounted4, Providers } = require('../dist/accounted4');
-const { Discord } = require('../dist/providers/Discord');
+const { Accounted4 } = require('../dist/accounted4');
 
 // Set up Express
 const app = express();
@@ -21,38 +20,30 @@ app.use(session({
 
 // Create the provider
 const secrets = require('./secrets.json');
-const discord = new Discord({
-	BASE_URL: Accounted4.buildBaseUrl('dev.lh', false, 8080),
-	CLIENT_ID: secrets.DISCORD_CLIENT_ID,
-	CLIENT_SECRET: secrets.DISCORD_CLIENT_SECRET,
-	SCOPES: ['guilds'],
-});
-const spotify = new Providers.Spotify({
-	BASE_URL: Accounted4.buildBaseUrl('dev.lh', false, 8080),
-	CLIENT_ID: secrets.SPOTIFY_CLIENT_ID,
-	CLIENT_SECRET: secrets.SPOTIFY_CLIENT_SECRET
-});
-const microsoft = new Providers.Microsoft({
-	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
-	CLIENT_ID: secrets.MICROSOFT_CLIENT_ID,
-	CLIENT_SECRET: secrets.MICROSOFT_CLIENT_SECRET,
-	SCOPES: ['user.read', 'offline_access'],
-});
-const github = new Providers.GitHub({
-	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
-	CLIENT_ID: secrets.GITHUB_CLIENT_ID,
-	CLIENT_SECRET: secrets.GITHUB_CLIENT_SECRET,
-});
-const google = new Providers.Google({
-	BASE_URL: Accounted4.buildBaseUrl('localhost', false, 8080),
-	CLIENT_ID: secrets.GOOGLE_CLIENT_ID,
-	CLIENT_SECRET: secrets.GOOGLE_CLIENT_SECRET,
-});
 
 // Create Accounted4
-const ac4 = new Accounted4(app, google, {
+const ac4 = new Accounted4(app, {
 	hostname: 'localhost',
-	port: 8080
+	port: 8080,
+	defaultProvider: 'Microsoft',
+	optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
+	providerOptions: {
+		Microsoft: {
+			// Required by every provider
+			clientId: secrets.MICROSOFT_CLIENT_ID,
+			clientSecret: secrets.MICROSOFT_CLIENT_SECRET,
+
+			// Optional for every provider (some have defaults)
+			scopes: ['user.read', 'offline_access'], // You can add additional scopes
+
+			// Optional for Microsoft (other providers may have other optional properties)
+			tenant: 'consumers',
+		},
+		GitHub: {
+			clientId: secrets.GITHUB_CLIENT_ID,
+			clientSecret: secrets.GITHUB_CLIENT_SECRET,
+		}
+	}
 });
 
 // Apply middleware to restricted routes
