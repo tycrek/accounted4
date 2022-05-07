@@ -15,7 +15,7 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Supported OAuth providers are [detailed below](#providers).
+**accounted4** is intended to make it easy for developers to add third-party OAuth<sup><a href="#disclaimer">!</a></sup> support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Supported OAuth providers are [detailed below](#providers).
 
 ## Usage
 
@@ -35,7 +35,7 @@ accounted4 is intended for use with [Express](https://expressjs.com/). It requir
 For tutorial purposes, this README will use `memorystore`, but feel free to use another if you prefer.
 
 ```ts
-import { Accounted4, Providers } from '@tycrek/accounted4';
+import { Accounted4 } from '@tycrek/accounted4';
 import express from 'express';
 import session from 'express-session';
 import MemoryStore from 'memorystore';
@@ -118,19 +118,6 @@ Microsoft is quite in-depth, so we'll skip the details here for now. Documentati
 </details>
 <br>
 
-Once your provider is configured, add the details to your code:
-
-```ts
-const hostname = 'localhost';
-
-const provider = new Providers.__PROVIDER_NAME_HERE__({
-    BASE_URL: Accounted4.buildBaseUrl(hostname),
-    CLIENT_ID: /* Your provider client ID here */,
-    CLIENT_SECRET: /* Your provider client secret here */,
-    /* All providers also accept an optional SCOPES array */
-});
-```
-
 ### Configure accounted4
 
 Finally, we create an instance of `Accounted4`. Passing the app is required as accounted4 needs to create routes for the OAuth provider to call upon for redirects. Support for more than one provider is planned for the future.
@@ -138,7 +125,29 @@ Finally, we create an instance of `Accounted4`. Passing the app is required as a
 You can choose to apply the middleware to specific paths, or to the entire app.
 
 ```ts
-const ac4 = new Accounted4(app, provider, { hostname });
+const ac4 = new Accounted4(app, {
+    hostname: 'localhost',
+    port: 8080,
+    defaultProvider: 'Microsoft',
+    optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
+    providerOptions: {
+        Microsoft: {
+            // Required by every provider
+            clientId: secrets.MICROSOFT_CLIENT_ID,
+            clientSecret: secrets.MICROSOFT_CLIENT_SECRET,
+
+            // Optional for every provider (some have defaults)
+            scopes: ['user.read', 'offline_access'], // You can add additional scopes
+
+            // Optional for Microsoft (other providers may have other optional properties)
+            tenant: 'consumers',
+        },
+        GitHub: {
+            clientId: secrets.GITHUB_CLIENT_ID,
+            clientSecret: secrets.GITHUB_CLIENT_SECRET,
+        }
+    }
+});
 
 app.use(ac4.auth());
 // or
@@ -204,3 +213,9 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [ ] Implement logout
 - [ ] Implement refreshing tokens
 - [ ] Automatic State checking
+
+<br>
+
+###### Disclaimer
+
+<small>accounted4 is set up for [OAuth2 Authorization Code Grants](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1). If your project requires a different grant, then this library may not be the right choice. Word of advice: *never use implicit grant*.</small>
