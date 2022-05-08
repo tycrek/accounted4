@@ -6,12 +6,14 @@ import { GitHub, GitHubOptions } from './providers/GitHub';
 import { Google, GoogleOptions } from './providers/Google';
 import { Microsoft, MicrosoftOptions } from './providers/Microsoft';
 import { Spotify, SpotifyOptions } from './providers/Spotify';
+import { Twitch, TwitchOptions } from './providers/Twitch';
 export const Providers = {
 	Discord,
 	GitHub,
 	Google,
 	Microsoft,
 	Spotify,
+	Twitch,
 };
 
 // Export names as a type
@@ -52,5 +54,6 @@ export interface Options {
 		Google?: GoogleOptions;
 		Microsoft?: MicrosoftOptions;
 		Spotify?: SpotifyOptions;
+		Twitch?: TwitchOptions;
 	};
 }

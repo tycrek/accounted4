@@ -116,6 +116,12 @@ Microsoft is quite in-depth, so we'll skip the details here for now. Documentati
 [Create a Spotify app](https://developer.spotify.com/dashboard) ([tutorial](https://developer.spotify.com/documentation/general/guides/authorization/app-settings/)). Once your app is created, you should see your **Client ID** and a button to **SHOW** your **Client secret**. Copy these for the next step. Click on **Edit Settings** and add **both** redirect URI's. [Visit Spotify's documentation](https://developer.spotify.com/documentation/general/guides/authorization/scopes/) for more information on scopes.
 
 </details>
+<details>
+<summary><strong>Twitch</strong></summary>
+
+[Create a Twitch app](https://dev.twitch.tv/console/apps/create) ([tutorial](https://dev.twitch.tv/docs/authentication/register-app)). Make sure to add **both** redirect URI's. Once your app is created, click **Manage**. Copy your **Client ID** and a button to make a **New Secret**. Copy these for the next step. [Visit Twitch documentation](https://dev.twitch.tv/docs/authentication/scopes/) for more information on scopes.
+
+</details>
 <br>
 
 ### Configure accounted4
@@ -171,7 +177,7 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [x] **[Google](https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens)**
 - [x] **[Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)**
 - [x] **[Spotify](https://developer.spotify.com/documentation/general/guides/authorization/code-flow/)**
-- [ ] [Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)
+- [x] [Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)
 - [ ] [Yahoo](https://developer.yahoo.com/oauth2/guide/flows_authcode/)
 - [ ] [Amazon](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html)
 - [ ] [Facebook](https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow#login)

@@ -25,7 +25,7 @@ const secrets = require('./secrets.json');
 const ac4 = new Accounted4(app, {
 	hostname: 'localhost',
 	port: 8080,
-	defaultProvider: 'Microsoft',
+	defaultProvider: 'Twitch',
 	optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
 	providerOptions: {
 		Microsoft: {
@@ -42,7 +42,11 @@ const ac4 = new Accounted4(app, {
 		GitHub: {
 			clientId: secrets.GITHUB_CLIENT_ID,
 			clientSecret: secrets.GITHUB_CLIENT_SECRET,
-		}
+		},
+		Twitch: {
+			clientId: secrets.TWITCH_CLIENT_ID,
+			clientSecret: secrets.TWITCH_CLIENT_SECRET,
+		},
 	}
 });
 
