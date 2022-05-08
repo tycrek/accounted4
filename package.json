@@ -1,6 +1,6 @@
 {
 	"name": "@tycrek/accounted4",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "Express middleware for easy OAuth with a variety of providers.",
 	"main": "./dist/accounted4.js",
 	"type": "commonjs",
