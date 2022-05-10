@@ -37,7 +37,7 @@ export class Accounted4 {
 		const checkProvider = (provider: ProviderNames) => {
 			let providerOptions = this.options.providerOptions[provider];
 			if (!providerOptions) throw new Error(`Provider ${provider} does not have options`);
-			this.providers[provider.toLowerCase()] = new Providers[provider](this.baseUrl, providerOptions);
+			this.providers[provider.toLowerCase()] = new Providers[provider](this.baseUrl, providerOptions as any);
 		};
 
 		// Check default provider
