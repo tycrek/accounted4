@@ -25,7 +25,7 @@ const secrets = require('./secrets.json');
 const ac4 = new Accounted4(app, {
 	hostname: 'localhost',
 	port: 8080,
-	defaultProvider: 'Twitch',
+	defaultProvider: 'Discord',
 	optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
 	providerOptions: {
 		Microsoft: {
@@ -47,6 +47,12 @@ const ac4 = new Accounted4(app, {
 			clientId: secrets.TWITCH_CLIENT_ID,
 			clientSecret: secrets.TWITCH_CLIENT_SECRET,
 		},
+		Discord: {
+			prompt: 'none',
+			scopes: ['email', 'guilds.join'],
+			clientId: secrets.DISCORD_CLIENT_ID,
+			clientSecret: secrets.DISCORD_CLIENT_SECRET,
+		}
 	}
 });
 
