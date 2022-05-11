@@ -177,7 +177,7 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [x] **[Google](https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens)**
 - [x] **[Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)**
 - [x] **[Spotify](https://developer.spotify.com/documentation/general/guides/authorization/code-flow/)**
-- [x] [Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)
+- [x] **[Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)**
 - [ ] [Yahoo](https://developer.yahoo.com/oauth2/guide/flows_authcode/)
 - [ ] [Amazon](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html)
 - [ ] [Facebook](https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow#login)
