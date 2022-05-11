@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ac4session, encodeObjectAsParams } from '../accounted4';
+import { encodeObjectAsParams } from '../accounted4';
 import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
 
 type GITHUB_SCOPES =

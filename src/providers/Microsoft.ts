@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
 import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
