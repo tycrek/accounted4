@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider, ProviderOptions } from '../Provider';
+import { getTokenFromRefresh, getTokenFromCode, Provider, ProviderOptions } from '../Provider';
 
 type DISCORD_SCOPES =
 	'activities.read' |
@@ -49,7 +48,8 @@ export class Discord implements Provider {
 	baseUrl: string;
 	options: DiscordOptions;
 	authUrl = 'https://discord.com/api/v8/oauth2/authorize';
-	tokenUrl = 'https://discord.com/api/oauth2/token';
+	tokenUrl = 'https://discord.com/api/v8/oauth2/token';
+	refreshUrl = 'https://discord.com/api/v8/oauth2/refresh';
 	redirectUri: string;
 
 	constructor(baseUrl: string, options: DiscordOptions) {
@@ -68,21 +68,33 @@ export class Discord implements Provider {
 	}
 
 	onSuccess(req: Request, res: Response, next: NextFunction) {
-		axios
-			.post(this.tokenUrl, encodeObjectAsParams({
+		getTokenFromCode(this, req, res, next, this.tokenUrl,
+			encodeObjectAsParams({
 				code: req.query.code,
 				client_id: this.options.clientId,
 				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
-			}))
-			.then(({ data }) =>
-				req.session.accounted4 = {
-					created: Date.now() / 1000,
-					provider: this.name,
-					token: data.access_token
-				})
-			.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
-			.catch(next);
+			}), this.sessionDataSchema);
+	}
+
+	doRefresh(req: Request): Promise<any> {
+		return getTokenFromRefresh(this, req, this.tokenUrl,
+			encodeObjectAsParams({
+				refresh_token: req.session.accounted4!.refreshToken,
+				client_id: this.options.clientId,
+				client_secret: this.options.clientSecret,
+				grant_type: 'refresh_token',
+			}), this.sessionDataSchema);
+	}
+
+	sessionDataSchema(provider: Provider, data: any) {
+		return {
+			created: Date.now() / 1000,
+			provider: provider.name,
+			token: data.access_token,
+			refreshToken: data.refresh_token,
+			expiresIn: data.expires_in,
+		};
 	}
 }

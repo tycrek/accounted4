@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider, ProviderOptions } from '../Provider';
+import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
 
 export interface GoogleOptions extends ProviderOptions {
 }
@@ -32,21 +32,21 @@ export class Google implements Provider {
 	}
 
 	onSuccess(req: Request, res: Response, next: NextFunction) {
-		axios
-			.post(this.tokenUrl, encodeObjectAsParams({
+		getTokenFromCode(this, req, res, next, this.tokenUrl,
+			encodeObjectAsParams({
 				code: req.query.code,
 				client_id: this.options.clientId,
 				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code'
-			}))
-			.then(({ data }) =>
-				req.session.accounted4 = {
-					created: Date.now() / 1000,
-					provider: this.name,
-					token: data.access_token
-				})
-			.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
-			.catch(next);
+			}), this.sessionDataSchema);
+	}
+
+	sessionDataSchema(provider: Provider, data: any) {
+		return {
+			created: Date.now() / 1000,
+			provider: provider.name,
+			token: data.access_token
+		};
 	}
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { Provider, ProviderOptions } from '../Provider';
+import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
 
 type SPOTIFY_SCOPES =
 	'ugc-image-upload' |
@@ -62,21 +62,21 @@ export class Spotify implements Provider {
 	}
 
 	onSuccess(req: Request, res: Response, next: NextFunction) {
-		axios
-			.post(this.tokenUrl, encodeObjectAsParams({
+		getTokenFromCode(this, req, res, next, this.tokenUrl,
+			encodeObjectAsParams({
 				code: req.query.code,
 				redirect_uri: this.redirectUri,
 				grant_type: 'authorization_code',
-			}), { headers: { Authorization: `Basic ${Buffer.from(`${this.options.clientId}:${this.options.clientSecret}`).toString('base64')}` } })
-			.then(({ data }) => {
-				if (data.error) throw new Error(data.error);
-				req.session.accounted4 = {
-					created: Date.now() / 1000,
-					provider: this.name,
-					token: data.access_token
-				};
-			})
-			.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
-			.catch(next);
+			}),
+			this.sessionDataSchema,
+			{ Authorization: `Basic ${Buffer.from(`${this.options.clientId}:${this.options.clientSecret}`).toString('base64')}` });
+	}
+
+	sessionDataSchema(provider: Provider, data: any) {
+		return {
+			created: Date.now() / 1000,
+			provider: provider.name,
+			token: data.access_token
+		};
 	}
 }

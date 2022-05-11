@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
-import { encodeObjectAsParams } from '../accounted4';
-import { Provider, ProviderOptions } from '../Provider';
+import { ac4session, encodeObjectAsParams } from '../accounted4';
+import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
 
 type GITHUB_SCOPES =
 	'repo' |
@@ -85,20 +84,22 @@ export class GitHub implements Provider {
 	}
 
 	onSuccess(req: Request, res: Response, next: NextFunction) {
-		axios
-			.post(this.tokenUrl, encodeObjectAsParams({
+		getTokenFromCode(this, req, res, next, this.tokenUrl,
+			encodeObjectAsParams({
 				code: req.query.code,
 				client_id: this.options.clientId,
 				client_secret: this.options.clientSecret,
 				redirect_uri: this.redirectUri,
-			}), { headers: { Accept: 'application/json' } })
-			.then(({ data }) =>
-				req.session.accounted4 = {
-					created: Date.now() / 1000,
-					provider: this.name,
-					token: data.access_token
-				})
-			.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
-			.catch(next);
+			}),
+			this.sessionDataSchema,
+			{ Accept: 'application/json' });
+	}
+
+	sessionDataSchema(provider: Provider, data: any) {
+		return {
+			created: Date.now() / 1000,
+			provider: provider.name,
+			token: data.access_token
+		};
 	}
 }

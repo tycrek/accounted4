@@ -42,6 +42,7 @@ const ac4 = new Accounted4(app, {
 		GitHub: {
 			clientId: secrets.GITHUB_CLIENT_ID,
 			clientSecret: secrets.GITHUB_CLIENT_SECRET,
+			scopes: ['repo:status', 'read:org', 'read:gpg_key'],
 		},
 		Twitch: {
 			clientId: secrets.TWITCH_CLIENT_ID,
@@ -49,7 +50,7 @@ const ac4 = new Accounted4(app, {
 		},
 		Discord: {
 			prompt: 'none',
-			scopes: ['email', 'guilds.join'],
+			scopes: ['email', 'guilds.join', 'gdm.join'],
 			clientId: secrets.DISCORD_CLIENT_ID,
 			clientSecret: secrets.DISCORD_CLIENT_SECRET,
 		},
@@ -57,7 +58,7 @@ const ac4 = new Accounted4(app, {
 			clientId: secrets.SPOTIFY_CLIENT_ID,
 			clientSecret: secrets.SPOTIFY_CLIENT_SECRET,
 			show_dialog: false,
-			scopes: ['user-read-email', 'user-read-playback-state', 'user-modify-playback-state', 'user-modify-playback-state', 'streaming',]
+			scopes: ['user-read-email', 'user-read-playback-state', 'user-modify-playback-state', 'user-modify-playback-state', 'streaming', 'playlist-read-private']
 		}
 	}
 });
