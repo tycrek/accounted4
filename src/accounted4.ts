@@ -63,9 +63,13 @@ export class Accounted4 {
 
 		// Set success callbacks
 		app.get(`/accounted4/:providerName`, (req, res, next) => {
-			let provider = req.params.providerName;
-			if (!this.providers[provider.toLowerCase()]) next(new Error(`Provider ${provider} not found`));
-			this.providers[provider.toLowerCase()].onSuccess(req, res, next);
+			if (req.query.error_description || req.query.error)
+				next(req.query.error_description || req.query.error);
+			else {
+				let provider = req.params.providerName;
+				if (!this.providers[provider.toLowerCase()]) next(new Error(`Provider ${provider} not found`));
+				this.providers[provider.toLowerCase()].onSuccess(req, res, next);
+			}
 		});
 	}
 
