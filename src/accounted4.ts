@@ -74,10 +74,23 @@ export class Accounted4 {
 	 */
 	auth() {
 		return (req: Request, res: Response, next: NextFunction) => {
-			if (req.session.accounted4 && req.session.accounted4.token) {
+			const now = Date.now() / 1000;
+			if (req.session.accounted4 && req.session.accounted4.token && (!req.session.accounted4.expiresIn || now < req.session.accounted4.created + req.session.accounted4.expiresIn)) {
+
+				// * Already authenticated 👍
 				console.log(`Session ${req.session.id} authenticated with Provider: ${req.session.accounted4.provider}`);
 				next();
+			} else if (req.session.accounted4 && req.session.accounted4.refreshToken) {
+
+				// ? Need to refresh token 🤔
+				console.log(`Session ${req.session.id} refreshing token with Provider: ${req.session.accounted4.provider}`);
+				const provider = this.providers[req.session.accounted4.provider];
+				provider.doRefresh?.call(provider, req)
+					.then(() => next())
+					.catch(next) ?? next(new Error(`Provider ${req.session.accounted4.provider} does not support refresh`));
 			} else {
+
+				// ! Need to authenticate 👎
 				console.log(`Session ${req.session.id} not authenticated`);
 				req.session.postAuthPath = req.originalUrl;
 				res.redirect(this.providers[this.options.defaultProvider.toLowerCase()].authUrl)
