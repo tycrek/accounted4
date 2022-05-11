@@ -4,12 +4,17 @@ import { Express, Request, Response, NextFunction } from 'express';
 
 export interface ac4session {
 	/**
+	 * Unix epoch (in seconds) when the session was created.
+	 */
+	created: number;
+
+	/**
 	 * Name of provider being used
 	 */
 	provider: string;
 
 	/**
-	 * accounted4 session token
+	 * Access token for the provider
 	 */
 	token: string;
 }

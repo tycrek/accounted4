@@ -72,6 +72,7 @@ export class Microsoft implements Provider {
 			.then(({ data }) => {
 				if (data.error) throw new Error(data.error_description);
 				req.session.accounted4 = {
+					created: Date.now() / 1000,
 					provider: this.name,
 					token: data.access_token
 				};

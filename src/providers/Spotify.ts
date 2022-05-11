@@ -71,6 +71,7 @@ export class Spotify implements Provider {
 			.then(({ data }) => {
 				if (data.error) throw new Error(data.error);
 				req.session.accounted4 = {
+					created: Date.now() / 1000,
 					provider: this.name,
 					token: data.access_token
 				};
