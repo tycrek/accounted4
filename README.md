@@ -15,7 +15,9 @@ accounted4
 
 [//]: # (NPM centered badge template END ----------------------------------------------------)
 
-**accounted4** is intended to make it easy for developers to add third-party OAuth<sup><a href="#disclaimer">!</a></sup> support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Supported OAuth providers are [detailed below](#providers).
+**accounted4** is intended to make it easy for developers to add third-party OAuth2<sup><a href="#disclaimer">!</a></sup> support to their Node.js applications. This project is still in its infancy; more features and providers will be added in the future. Supported OAuth2 providers are [detailed below](#providers).
+
+For more information on OAuth2, the folks at [FusionAuth](https://fusionauth.io) wrote a fantastic, easy-to-understand [OAuth2 guide](https://fusionauth.io/learn/expert-advice/oauth/modern-guide-to-oauth) that I highly recommend. Additionally, the [OAuth2 specification](https://datatracker.ietf.org/doc/html/rfc6749) is a great resource for all other information about OAuth2.
 
 ## Usage
 
