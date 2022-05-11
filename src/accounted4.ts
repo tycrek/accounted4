@@ -17,6 +17,16 @@ export interface ac4session {
 	 * Access token for the provider
 	 */
 	token: string;
+
+	/**
+	 * Refresh token for the provider, if applicable
+	 */
+	refreshToken?: string;
+
+	/**
+	 * Expires in (in seconds)
+	 */
+	expiresIn?: number;
 }
 
 export class Accounted4 {
