@@ -4,9 +4,16 @@ import { ac4session } from './accounted4';
 
 type SessionDataSchemaFunction = (provider: Provider, data: any) => ac4session;
 
+function mergeTwo(obj1: any, obj2: any) {
+	let result: any = {};
+	Object.keys({ ...obj1, ...obj2 }).map((key) => { result[key] = obj2[key] || obj1[key] });
+	return result;
+}
+
+
 export function getTokenFromCode(provider: Provider, req: Request, res: Response, next: NextFunction, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction, headers?: any) {
 	axios.post(url, params, headers ? { headers } : undefined)
-		.then(({ data }) => req.session.accounted4 = sessionDataSchema(provider, data))
+		.then(({ data }) => req.session.accounted4 = mergeTwo(req.session.accounted4, sessionDataSchema(provider, data)))
 		.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
 		.catch(next);
 }
@@ -14,7 +21,7 @@ export function getTokenFromCode(provider: Provider, req: Request, res: Response
 export function getTokenFromRefresh(provider: Provider, req: Request, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction, headers?: any) {
 	return new Promise((resolve, reject) =>
 		axios.post(url, params, headers ? { headers } : undefined)
-			.then(({ data }) => req.session.accounted4 = sessionDataSchema(provider, data))
+			.then(({ data }) => req.session.accounted4 = mergeTwo(req.session.accounted4, sessionDataSchema(provider, data)))
 			.then(() => resolve(void 0))
 			.catch(reject));
 }

@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
+import { getTokenFromCode, getTokenFromRefresh, Provider, ProviderOptions } from '../Provider';
 
 type TWITCH_SCOPES =
 	'analytics:read:extensions' |
@@ -95,11 +94,23 @@ export class Twitch implements Provider {
 			}), this.sessionDataSchema);
 	}
 
+	doRefresh(req: Request): Promise<any> {
+		return getTokenFromRefresh(this, req, this.tokenUrl,
+			encodeObjectAsParams({
+				refresh_token: req.session.accounted4!.refreshToken,
+				client_id: this.options.clientId,
+				client_secret: this.options.clientSecret,
+				grant_type: 'refresh_token',
+			}), this.sessionDataSchema);
+	}
+
 	sessionDataSchema(provider: Provider, data: any) {
 		return {
 			created: Date.now() / 1000,
 			provider: provider.name,
-			token: data.access_token
+			token: data.access_token,
+			refreshToken: data.refresh_token,
+			expiresIn: data.expires_in,
 		};
 	}
 }

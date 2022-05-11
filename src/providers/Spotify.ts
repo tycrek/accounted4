@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { Request, Response, NextFunction } from 'express';
 import { encodeObjectAsParams } from '../accounted4';
-import { getTokenFromCode, Provider, ProviderOptions } from '../Provider';
+import { getTokenFromCode, getTokenFromRefresh, Provider, ProviderOptions } from '../Provider';
 
 type SPOTIFY_SCOPES =
 	'ugc-image-upload' |
@@ -45,6 +44,7 @@ export class Spotify implements Provider {
 	authUrl = 'https://accounts.spotify.com/authorize';
 	tokenUrl = 'https://accounts.spotify.com/api/token';
 	redirectUri: string;
+	authorization: string;
 
 	constructor(baseUrl: string, options: SpotifyOptions) {
 		this.baseUrl = baseUrl;
@@ -59,6 +59,9 @@ export class Spotify implements Provider {
 			scope: ''.concat(this.options.scopes?.join(' ') || '').trim(),
 			show_dialog: this.options.show_dialog ?? false,
 		}));
+
+		// Set authorization header
+		this.authorization = `Basic ${Buffer.from(`${this.options.clientId}:${this.options.clientSecret}`).toString('base64')}`;
 	}
 
 	onSuccess(req: Request, res: Response, next: NextFunction) {
@@ -69,14 +72,26 @@ export class Spotify implements Provider {
 				grant_type: 'authorization_code',
 			}),
 			this.sessionDataSchema,
-			{ Authorization: `Basic ${Buffer.from(`${this.options.clientId}:${this.options.clientSecret}`).toString('base64')}` });
+			{ Authorization: this.authorization });
+	}
+
+	doRefresh(req: Request): Promise<any> {
+		return getTokenFromRefresh(this, req, this.tokenUrl,
+			encodeObjectAsParams({
+				refresh_token: req.session.accounted4!.refreshToken,
+				grant_type: 'refresh_token',
+			}),
+			this.sessionDataSchema,
+			{ Authorization: this.authorization });
 	}
 
 	sessionDataSchema(provider: Provider, data: any) {
 		return {
 			created: Date.now() / 1000,
 			provider: provider.name,
-			token: data.access_token
+			token: data.access_token,
+			refreshToken: data.refresh_token,
+			expiresIn: data.expires_in,
 		};
 	}
 }
