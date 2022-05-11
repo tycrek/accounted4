@@ -42,6 +42,7 @@ export class Google implements Provider {
 			}))
 			.then(({ data }) =>
 				req.session.accounted4 = {
+					created: Date.now() / 1000,
 					provider: this.name,
 					token: data.access_token
 				})
