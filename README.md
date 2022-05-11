@@ -7,7 +7,7 @@ accounted4
 
 [![NPMCBT badge]][NPMCBT link]
 
-*Express middleware for easy OAuth with a variety of providers.*
+*Express middleware for easy OAuth2 with a variety of providers.*
 </div>
 
 [NPMCBT badge]: https://img.shields.io/npm/v/@tycrek/accounted4?color=CB3837&label=%20View%20on%20NPM&logo=npm&style=for-the-badge
@@ -128,7 +128,7 @@ Microsoft is quite in-depth, so we'll skip the details here for now. Documentati
 
 ### Configure accounted4
 
-Finally, we create an instance of `Accounted4`. Passing the app is required as accounted4 needs to create routes for the OAuth provider to call upon for redirects. Support for more than one provider is planned for the future.
+Finally, we create an instance of `Accounted4`. Passing the app is required as accounted4 needs to create routes for the OAuth2 provider to call upon for redirects. Support for more than one provider is planned for the future.
 
 You can choose to apply the middleware to specific paths, or to the entire app.
 
@@ -162,7 +162,7 @@ app.use(ac4.auth());
 app.use('/my-private-zone', ac4.auth());
 ```
 
-Now add the rest of your routes and start the app. Visiting any of your routes will redirect the user to the OAuth provider. Once they sign in, they'll be redirected back to your app.
+Now add the rest of your routes and start the app. Visiting any of your routes will redirect the user to the OAuth2 provider. Once they sign in, they'll be redirected back to your app.
 
 ### Using the providers' API
 
