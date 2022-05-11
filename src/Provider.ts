@@ -4,16 +4,16 @@ import { ac4session } from './accounted4';
 
 type SessionDataSchemaFunction = (provider: Provider, data: any) => ac4session;
 
-export function getTokenFromCode(provider: Provider, req: Request, res: Response, next: NextFunction, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction) {
-	axios.post(url, params)
+export function getTokenFromCode(provider: Provider, req: Request, res: Response, next: NextFunction, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction, headers?: any) {
+	axios.post(url, params, headers ? { headers } : undefined)
 		.then(({ data }) => req.session.accounted4 = sessionDataSchema(provider, data))
 		.then(() => res.redirect(req.session?.postAuthPath ?? '/'))
 		.catch(next);
 }
 
-export function getTokenFromRefresh(provider: Provider, req: Request, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction) {
+export function getTokenFromRefresh(provider: Provider, req: Request, url: string, params: string, sessionDataSchema: SessionDataSchemaFunction, headers?: any) {
 	return new Promise((resolve, reject) =>
-		axios.post(url, params)
+		axios.post(url, params, headers ? { headers } : undefined)
 			.then(({ data }) => req.session.accounted4 = sessionDataSchema(provider, data))
 			.then(() => resolve(void 0))
 			.catch(reject));
