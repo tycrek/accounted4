@@ -25,7 +25,7 @@ const secrets = require('./secrets.json');
 const ac4 = new Accounted4(app, {
 	hostname: 'localhost',
 	port: 8080,
-	defaultProvider: 'Discord',
+	defaultProvider: 'Spotify',
 	optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
 	providerOptions: {
 		Microsoft: {
@@ -52,6 +52,12 @@ const ac4 = new Accounted4(app, {
 			scopes: ['email', 'guilds.join'],
 			clientId: secrets.DISCORD_CLIENT_ID,
 			clientSecret: secrets.DISCORD_CLIENT_SECRET,
+		},
+		Spotify: {
+			clientId: secrets.SPOTIFY_CLIENT_ID,
+			clientSecret: secrets.SPOTIFY_CLIENT_SECRET,
+			show_dialog: false,
+			scopes: ['user-read-email', 'user-read-playback-state', 'user-modify-playback-state', 'user-modify-playback-state', 'streaming',]
 		}
 	}
 });
