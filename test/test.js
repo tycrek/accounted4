@@ -71,11 +71,12 @@ app.get('/', (req, res) => res.send('hi'));
 // Restricted routes
 app.get('/user', (req, res) => res.send(`welcome! signed in via: ${req.session.accounted4.provider}`));
 app.get('/user/egg', (req, res) => res.send('Easter time'))
+app.get('/user/info', (req, res) => res.type('json').send(req.session.accounted4));
 
 // Error handling
 app.use((err, req, res, next) => {
 	console.error(err);
-	res.status(500).send('Something broke!');
+	res.status(500).send(`Something broke! ${err.message || err}`);
 })
 
 app.listen(8080, () => console.log('Listening on port 8080! Click here: http://localhost:8080'));
