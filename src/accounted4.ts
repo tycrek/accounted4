@@ -68,7 +68,7 @@ export class Accounted4 {
 			else {
 				let provider = req.params.providerName;
 				if (!this.providers[provider.toLowerCase()]) next(new Error(`Provider ${provider} not found`));
-				this.providers[provider.toLowerCase()].onSuccess(req, res, next);
+				else this.providers[provider.toLowerCase()].onSuccess(req, res, next);
 			}
 		});
 	}
