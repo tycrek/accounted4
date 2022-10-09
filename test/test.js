@@ -69,13 +69,14 @@ const ac4 = new Accounted4(app, {
 });
 
 // Apply middleware to restricted routes
+app.use('/user/gh', ac4.auth('GitHub'));
 app.use('/user', ac4.auth());
 
 // Public routes
 app.get('/', (req, res) => res.send('hi'));
 
 // Restricted routes
-app.get('/user', (req, res) => res.send(`welcome! signed in via: ${req.session.accounted4.provider}`));
+app.get('/user*', (req, res) => res.send(`welcome! signed in via: ${req.session.accounted4.provider}`));
 app.get('/user/egg', (req, res) => res.send('Easter time'))
 app.get('/user/info', (req, res) => res.type('json').send(req.session.accounted4));
 

@@ -76,7 +76,7 @@ export class Accounted4 {
 	/** 
 	 * Middleware
 	 */
-	auth() {
+	auth(provider?: ProviderNames) {
 		return (req: Request, res: Response, next: NextFunction) => {
 			const now = Date.now() / 1000;
 			if (req.session.accounted4 && req.session.accounted4.token && (!req.session.accounted4.expiresIn || now < req.session.accounted4.created + req.session.accounted4.expiresIn)) {
@@ -97,7 +97,7 @@ export class Accounted4 {
 				// ! Need to authenticate 👎
 				console.log(`Session ${req.session.id} not authenticated`);
 				req.session.postAuthPath = req.originalUrl;
-				res.redirect(this.providers[this.options.defaultProvider.toLowerCase()].authUrl)
+				res.redirect(this.providers[(provider ?? this.options.defaultProvider).toLowerCase()].authUrl)
 			}
 		};
 	}
