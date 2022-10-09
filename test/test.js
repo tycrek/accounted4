@@ -25,7 +25,7 @@ const secrets = require('./secrets.json');
 const ac4 = new Accounted4(app, {
 	hostname: 'localhost',
 	port: 8080,
-	defaultProvider: 'Spotify',
+	defaultProvider: 'DigitalOcean',
 	optionalProviders: ['GitHub'], // ! optionalProviders not yet implemented
 	providerOptions: {
 		Microsoft: {
@@ -59,6 +59,11 @@ const ac4 = new Accounted4(app, {
 			clientSecret: secrets.SPOTIFY_CLIENT_SECRET,
 			show_dialog: false,
 			scopes: ['user-read-email', 'user-read-playback-state', 'user-modify-playback-state', 'user-modify-playback-state', 'streaming', 'playlist-read-private']
+		},
+		DigitalOcean: {
+			clientId: secrets.DIGITALOCEAN_CLIENT_ID,
+			clientSecret: secrets.DIGITALOCEAN_CLIENT_SECRET,
+			scopes: ['read', 'write'],
 		}
 	}
 });

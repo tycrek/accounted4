@@ -1,6 +1,7 @@
 import { ProviderOptions } from './Provider';
 
 // Providers
+import { DigitalOcean, DigitalOceanOptions } from './providers/DigitalOcean';
 import { Discord, DiscordOptions } from './providers/Discord';
 import { GitHub, GitHubOptions } from './providers/GitHub';
 import { Google, GoogleOptions } from './providers/Google';
@@ -8,6 +9,7 @@ import { Microsoft, MicrosoftOptions } from './providers/Microsoft';
 import { Spotify, SpotifyOptions } from './providers/Spotify';
 import { Twitch, TwitchOptions } from './providers/Twitch';
 export const Providers = {
+	DigitalOcean,
 	Discord,
 	GitHub,
 	Google,
@@ -49,6 +51,7 @@ export interface Options {
 	 * Provider options
 	 */
 	providerOptions: {
+		DigitalOcean?: DigitalOceanOptions;
 		Discord?: DiscordOptions;
 		GitHub?: GitHubOptions;
 		Google?: GoogleOptions;

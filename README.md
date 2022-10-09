@@ -78,6 +78,12 @@ Replace `<provider-name>` with the name of the provider, as listed below, **in l
 #### Providers
 
 <details>
+<summary><strong>Digital Ocean</strong></summary>
+
+[Create a Digital Ocean OAuth2 app](https://cloud.digitalocean.com/account/api/applications/new). For the **Callback URL**, use the **production** redirect URI. Once your app is created, Click on **More**, then **View**, and copy the **Client ID** and **Client Secret**. [Visit Digital Ocean's OAuth2 documentation](https://docs.digitalocean.com/reference/api/oauth-api/#scopes) for more information on scopes and other settings.
+
+</details>
+<details>
 <summary><strong>Discord</strong></summary>
 
 [Create a Discord app](https://discord.com/developers/applications). Once your app is created, click the **OAuth2** tab and copy the **Client ID** and reset the **Client Secret**. Make sure you add **both** redirect URIs. [Visit Discord's documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes) for more information on scopes.
@@ -180,6 +186,7 @@ At the moment, that's all there is to it! As development continues, I'll add mor
 - [x] **[Microsoft](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)**
 - [x] **[Spotify](https://developer.spotify.com/documentation/general/guides/authorization/code-flow/)** (with refresh)
 - [x] **[Twitch](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#authorization-code-grant-flow)** (with refresh)
+- [x] **[Digital Ocean](https://docs.digitalocean.com/reference/api/oauth-api/)
 - [ ] [Yahoo](https://developer.yahoo.com/oauth2/guide/flows_authcode/)
 - [ ] [Amazon](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html)
 - [ ] [Facebook](https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow#login)
