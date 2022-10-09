@@ -79,7 +79,7 @@ export class Discord implements Provider {
 	}
 
 	doRefresh(req: Request): Promise<any> {
-		return getTokenFromRefresh(this, req, this.tokenUrl,
+		return getTokenFromRefresh(this, req, this.refreshUrl,
 			encodeObjectAsParams({
 				refresh_token: req.session.accounted4!.refreshToken,
 				client_id: this.options.clientId,
