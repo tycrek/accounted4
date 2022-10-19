@@ -1,1 +1,1 @@
-test/test.js linguist-vendored=false
+test/test.js -linguist-vendored
